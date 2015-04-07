@@ -4,7 +4,7 @@ Woking API created with Jersey - JAX-RS:
 
 Working API documentation created with SWAGGER:
   
-  http://localhost:8080/api/api-docs
+  http://localhost:8080/PersonREST/api/swagger.json
 
 
 SWAGGER UI pointing  http://localhost:8080/api/api-docs
