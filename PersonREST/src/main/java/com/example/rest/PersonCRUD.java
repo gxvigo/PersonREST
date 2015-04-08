@@ -22,12 +22,28 @@ public class PersonCRUD {
 
 	/*
 	 * Person JSON
-	  { "personId":"1", "firstName":"John", "lastName":"Smith", "age":25,
-	  "address":{ "streetAddress":"21 2nd Street", "city":"New York",
-	  "state":"NY", "postalCode":"10021" }, "phoneNumber":[{ "type":"home",
-	  "number":"212 555-1234" }, { "type":"mobile", "number":"646 555-4567" }]
-	  }
-	  
+{  
+   "personId":"1",
+   "firstName":"John",
+   "lastName":"Smith",
+   "age":25,
+   "address":{  
+      "streetAddress":"21 2nd Street",
+      "city":"New York",
+      "state":"NY",
+      "postalCode":"10021"
+   },
+   "phoneNumber":[  
+      {  
+         "type":"home",
+         "number":"212 555-1234"
+      },
+      {  
+         "type":"mobile",
+         "number":"646 555-4567"
+      }
+   ]
+}
 	  
 	  Persons JSON
 {  
@@ -92,6 +108,7 @@ public class PersonCRUD {
 		// adding person to persons JSON
 		for (int y = 0; y < 10; y++) {
 
+			// create a random person based on value catalogue (arrays)
 			Random rand = new Random();
 			int i = rand.nextInt(max - min + 1) + min;
 			
@@ -150,29 +167,33 @@ public class PersonCRUD {
 					.entity("Entity not found for ID: " + id).build();
 		}
 
+		// create a random person based on value catalogue (arrays)
+		Random rand = new Random();
+		int i = rand.nextInt(max - min + 1) + min;
+		
 		JSONObject address = new JSONObject();
-		address.put("streetAddress", "21 2nd Street");
-		address.put("city", "New York");
-		address.put("state", "NY");
-		address.put("postalCode", "10021");
+		address.put("streetAddress", streetAddressA[i]);
+		address.put("city", cityA[i]);
+		address.put("state", stateA[i]);
+		address.put("postalCode", postalCodeA[i]);
 
 		JSONObject phoneNumber1 = new JSONObject();
 		phoneNumber1.put("type", "home");
-		phoneNumber1.put("number", "212 555-1234");
+		phoneNumber1.put("number", numberHomeA[i]);
 
 		JSONObject phoneNumber2 = new JSONObject();
 		phoneNumber2.put("type", "mobile");
-		phoneNumber2.put("number", "646 555-4567");
+		phoneNumber2.put("number", numberMobileA[i]);
 
 		JSONArray phoneNumber = new JSONArray();
 		phoneNumber.add(phoneNumber1);
 		phoneNumber.add(phoneNumber2);
 
 		JSONObject person = new JSONObject();
-		person.put("personId", "1");
-		person.put("firstName", "John");
-		person.put("lastName", "Smith");
-		person.put("age", 25);
+		person.put("personId", id);
+		person.put("firstName", firstNameA[i]);
+		person.put("lastName", lastNameA[i]);
+		person.put("age", ageA[i]);
 		person.put("address", address);
 		person.put("phoneNumber", phoneNumber);
 

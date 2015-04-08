@@ -1,6 +1,9 @@
 Woking API created with Jersey - JAX-RS:
 
   http://localhost:8080/api/hello/a
+  
+  http://localhost:8080/PersonREST/api/persons
+  http://localhost:8080/PersonREST/api/persons/9
 
 Working API documentation created with SWAGGER:
   
