@@ -29,7 +29,7 @@
         url = "http://localhost:8080/PersonREST/api/swagger.json";
       }
       window.swaggerUi = new SwaggerUi({
-        url: "http://localhost:8080/PersonREST/api/swagger.json",
+        url: url,
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
         onComplete: function(swaggerApi, swaggerUi){
@@ -52,7 +52,6 @@
         docExpansion: "none",
         sorter : "alpha"
       });
-
       function addApiKeyAuthorization() {
         var key = encodeURIComponent($('#input_apiKey')[0].value);
         log("key: " + key);
@@ -62,18 +61,14 @@
             log("added key " + key);
         }
       }
-
       $('#input_apiKey').change(addApiKeyAuthorization);
-
       // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
       /*
         var apiKey = "myApiKeyXXXX123456789";
         $('#input_apiKey').val(apiKey);
         addApiKeyAuthorization();
       */
-
       window.swaggerUi.load();
-
       function log() {
         if ('console' in window) {
           console.log.apply(console, arguments);
@@ -88,7 +83,7 @@
   <div class="swagger-ui-wrap">
     <a id="logo" href="http://swagger.io">swagger</a>
     <form id='api_selector'>
-      <div class='input'><input placeholder="http://localhost:8080/PersonREST/api/swagger.json" id="input_baseUrl" name="baseUrl" type="text"/></div>
+      <div class='input'><input placeholder="http://localhost:8080/PersonREST/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
       <div class='input'><a id="explore" href="#">Explore</a></div>
     </form>

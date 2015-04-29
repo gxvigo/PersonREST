@@ -12,8 +12,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
-@Path("hello")
-@Api(value = "/hello", description = "Say Hello!")
+@Path("/hello")
+@Api(value = "hello", description = "Say Hello!")
 public class PersonREST {
 
 	@GET
