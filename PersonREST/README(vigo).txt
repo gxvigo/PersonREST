@@ -1,9 +1,14 @@
 Woking API created with Jersey - JAX-RS:
 
+  # Sample implemented in com.example.rest.PersonREST.java (just hello world)
   http://localhost:8080/api/hello/a
   
+  # Sample implemented in com.example.rest.PersonCRUD.java (person(s) JSON hardcoded in the java class)
   http://localhost:8080/PersonREST/api/persons
   http://localhost:8080/PersonREST/api/persons/9
+  
+  # Sample implemented in com.example.rest.PersonDbCRUD.java (person(s) stored in MongoDB in my Mac)
+  http://localhost:8080/PersonREST/api/db-persons
 
 Working API documentation created with SWAGGER:
   
