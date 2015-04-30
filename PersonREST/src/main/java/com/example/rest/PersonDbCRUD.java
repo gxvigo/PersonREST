@@ -37,65 +37,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 public class PersonDbCRUD {
 	
 
-	/*
-	 * Person JSON
-{  
-   "personId":"1",
-   "firstName":"John",
-   "lastName":"Smith",
-   "age":25,
-   "address":{  
-      "streetAddress":"21 2nd Street",
-      "city":"New York",
-      "state":"NY",
-      "postalCode":"10021"
-   },
-   "phoneNumber":[  
-      {  
-         "type":"home",
-         "number":"212 555-1234"
-      },
-      {  
-         "type":"mobile",
-         "number":"646 555-4567"
-      }
-   ]
-}
-	  
-	  Persons JSON
-{  
-   "persons":[  
-      {  
-         "personId":"1",
-         "firstName":"John",
-         "lastName":"Smith",
-         "age":25,
-         "address":{  
-            "streetAddress":"21 2nd Street",
-            "city":"New York",
-            "state":"NY",
-            "postalCode":"10021"
-         },
-         "phoneNumber":[  
-            {  
-               "type":"home",
-               "number":"212 555-1234"
-            },
-            {  
-               "type":"mobile",
-               "number":"646 555-4567"
-            }
-         ]
-      }
-   ]
-}
-	  
-	  
-	  
-	 */
-
-
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Retrieve all persons from db", response = String.class)
@@ -116,86 +58,11 @@ public class PersonDbCRUD {
 		System.out.println("### persons" + persons.toString());
 
 		Response response = null;
-		return response.ok(persons.toString(), MediaType.APPLICATION_JSON).build();
-		
+		return response.ok(persons.toString(), MediaType.APPLICATION_JSON).build();	
 	}
 	
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Add person to db", response = String.class)
-    public Response createUser(Person person,
-            @DefaultValue("false") @QueryParam("allow-admin") boolean allowAdmin)
-            throws URISyntaxException {
-    	
-    	System.out.println("### In add person - @POST");
-    	System.out.println("### person: " + person);
-    	
-    	// check whether the personId already exist
-    	
-    	// add person document into mongodb
-    	
-        System.out.println(person.getPersonId());
-        return Response.status(201)
-                .contentLocation(new URI("/PersonREST/api/db-persons/" + person.getPersonId())).build();
-    }
-
-    
-    
-/**		
-
-		// create persons JSON
-		JSONObject persons = new JSONObject();
-		JSONArray personsA = new JSONArray();
-		
-		// adding person to persons JSON
-		for (int y = 0; y < 10; y++) {
-
-			// create a random person based on value catalogue (arrays)
-			Random rand = new Random();
-			int i = rand.nextInt(max - min + 1) + min;
-			
-			JSONObject address = new JSONObject();
-			address.put("streetAddress", streetAddressA[i]);
-			address.put("city", cityA[i]);
-			address.put("state", stateA[i]);
-			address.put("postalCode", postalCodeA[i]);
-
-			JSONObject phoneNumber1 = new JSONObject();
-			phoneNumber1.put("type", "home");
-			phoneNumber1.put("number", numberHomeA[i]);
-
-			JSONObject phoneNumber2 = new JSONObject();
-			phoneNumber2.put("type", "mobile");
-			phoneNumber2.put("number", numberMobileA[i]);
-
-			JSONArray phoneNumber = new JSONArray();
-			phoneNumber.add(phoneNumber1);
-			phoneNumber.add(phoneNumber2);
-
-			JSONObject person = new JSONObject();
-			person.put("personId", personIdA[i]);
-			person.put("firstName", firstNameA[i]);
-			person.put("lastName", lastNameA[i]);
-			person.put("age", ageA[i]);
-			person.put("address", address);
-			person.put("phoneNumber", phoneNumber);
-			
-			personsA.add(person);
-
-		}
-		
-		persons.put("persons" , personsA);
-		
-		String result = persons.toString();
-		
-		return result;
-		
-		
-	}
-
-**/
-
+	
+	
 	@Path("{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -234,6 +101,47 @@ public class PersonDbCRUD {
 		String json = "{\"message\": \"No Entity found\"}";
 		return Response.ok(json, MediaType.APPLICATION_JSON).build();
 	}
+	
+	
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Add person to db. Pass person.json in the Request body.", response = String.class)
+    public Response createPerson(Person person,
+            @DefaultValue("false") @QueryParam("allow-admin") boolean allowAdmin)
+            throws URISyntaxException {
+    	
+    	System.out.println("### In add person - @POST");
+    	System.out.println("### person: " + person);
+    	
+      	// check whether the personId already exist
+	
+    	int id = person.getPersonId();
+		
+		// Get a db connection to mongodb. Retrieve the given collection ("persons")
+		DBCollection coll = MongoDB.INSTANCE.getSomeDB().getCollection("persons");
+		
+		BasicDBObject query = new BasicDBObject("personId", id);
+		DBCursor personCursor = coll.find(query);
+		System.out.println("### number of items returned by the query: " + personCursor.count());
+		
+		if (personCursor.count() > 0){
+	        // Construct+return the response here...
+			String msg = "{\"message\": \"Person with personId " + id + " already in the db\"}";
+	        return Response.status(409).type("application/json").entity(msg).build();
+		}
+
+    	
+    	// add person document into mongodb
+    	
+        System.out.println(person.getPersonId());
+        return Response.status(201)
+                .contentLocation(new URI("/PersonREST/api/db-persons/" + person.getPersonId())).build();
+    }
+
+
+
+
 
 
 
