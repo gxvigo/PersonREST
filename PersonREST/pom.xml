@@ -77,6 +77,7 @@
 			<version>1.1</version>
 		</dependency>
 
+
 		<!-- mongodb driver -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -88,6 +89,54 @@
 			<artifactId>bson</artifactId>
 			<version>2.13.1</version>
 		</dependency>
+
+		<!-- mqlight -->
+		<dependency>
+			<groupId>mqlight</groupId>
+			<artifactId>mqlight-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.0.21.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.oxo42</groupId>
+			<artifactId>stateless4j</artifactId>
+			<version>2.5.0</version>
+			<exclusions>
+				<!-- exclude stateless4j's dependency on slf4j - as this is already -->
+				<!-- a dependency of the mqlight-api artifact. -->
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 
 
 	</dependencies>
